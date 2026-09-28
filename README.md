@@ -1,75 +1,62 @@
-# React + TypeScript + Vite
+# Telegram-чат через GREEN-API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend на React, TypeScript и Vite. Цель: подключить свой инстанс GREEN-API, создать личный чат по номеру телефона и обмениваться текстовыми сообщениями в Telegram.
 
-Currently, two official plugins are available:
+## Текущее состояние
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Выполнены этапы 1–2: FSD-каркас, Redux Toolkit, CSS Modules, строгая проверка TypeScript, тестовая инфраструктура и адаптивный интерфейс. На стартовом экране доступен просмотр через «Открыть демо чата». Реальное подключение инстанса и запросы к GREEN-API ещё не реализованы.
 
-## React Compiler
+В демо можно искать и переключать диалоги, создавать локальный чат по номеру и добавлять текстовые сообщения. Черновики независимы для каждого чата. Enter добавляет сообщение, Shift+Enter — перенос строки. Все данные вымышленные и сбрасываются при выходе или перезагрузке; сообщения в Telegram не отправляются. Поля подключения не содержат заранее сохранённых ключей.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Запуск
 
-## Expanding the ESLint configuration
+Требуется Node.js 22.12+ и npm.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```sh
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Откройте адрес, который Vite выведет в терминале.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Команда | Назначение |
+| --- | --- |
+| `npm run dev` | Разработка с горячим обновлением |
+| `npm run build` | Проверка типов и сборка в `dist/` |
+| `npm run preview` | Просмотр предварительно собранного приложения |
+| `npm run lint` | Проверка ESLint |
+| `npm test` | Однократный запуск Vitest |
+| `npm run test:watch` | Тесты в режиме наблюдения |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Архитектура
 
-```
+Входная точка — `src/main.tsx`. Импорты `@/` указывают на `src/`.
+
+| Слой | Ответственность |
+| --- | --- |
+| `app` | Инициализация, провайдеры, Redux store, глобальные стили |
+| `pages` | Экран подключения и композиция демо-мессенджера |
+| `widgets` | Список чатов и область переписки |
+| `features` | Формы подключения, создания чата и ввода сообщения |
+| `entities` | Сессия, типы чата и сообщения, строка диалога и пузырь сообщения |
+| `shared` | UI-примитивы, форматирование дат, тестовая инфраструктура |
+
+Импортировать можно нижележащие слои через публичные экспорты слайсов. Слайсы одного слоя не импортируют друг друга. Внутри слайса используются относительные импорты. Не импортируйте store или app-level hooks из нижних слоёв: селекторы должны иметь узкие типы состояния.
+
+Redux хранит состояние сессии; поля форм и модальные окна — локальное состояние React. Временные демо-данные изолированы в модели страницы мессенджера; состояние настоящих чатов будет добавлено в Redux на следующих этапах. Токен будет храниться отдельно от Redux в памяти API-клиента. Стили компонентов — `*.module.css`, общие переменные — в `app/styles/global.css`.
+
+## Тестирование
+
+Тесты `*.test.ts(x)` располагаются рядом с проверяемым модулем. Vitest использует jsdom, Testing Library и jest-dom. MSW настроен для перехвата запросов: каждый тест добавляет обработчики через `server.use(...)`; необработанные запросы считаются ошибкой. Реальные ключи и отправка сообщений для автоматических тестов не нужны.
+
+## Дальнейшие этапы
+
+3. API-клиент и подключение инстанса.
+4. Создание и переключение чатов.
+5. Отправка текста.
+6. Получение уведомлений и непрочитанные сообщения.
+7. Интеграционные проверки и проверка реального обмена.
+
+Для реальной проверки потребуется авторизованный Telegram-инстанс GREEN-API: `apiUrl`, `idInstance`, `apiTokenInstance`. Входящие уведомления должны быть включены, `webhookUrl` — пустым. Учётные данные вводятся пользователем в будущую форму, не добавляются в исходники или `.env` сборки.
+
+Планируемое поведение: один потребитель очереди на инстанс, данные только в памяти сеанса. `DeleteNotification` подтверждает сохранение события приложением; прочтение пользователем и счётчик непрочитанных учитываются отдельно. После перезагрузки локальная переписка исчезает, подтверждённые уведомления повторно не загружаются. Прямой доступ из браузера и CORS будут проверены на этапе подключения.
