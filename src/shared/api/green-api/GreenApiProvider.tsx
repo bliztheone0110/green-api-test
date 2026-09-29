@@ -22,5 +22,7 @@ export function GreenApiProvider({ children }: PropsWithChildren) {
   const getClient = useCallback(() => clientRef.current, [])
   const value = useMemo(() => ({ connect, disconnect, getClient }), [connect, disconnect, getClient])
 
-  return <GreenApiContext value={value}>{children}</GreenApiContext>
+  return <GreenApiContext value={value}>
+    {children}
+  </GreenApiContext>
 }

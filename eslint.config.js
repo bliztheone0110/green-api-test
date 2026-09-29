@@ -1,11 +1,11 @@
 import eslintReact from '@eslint-react/eslint-plugin'
+import stylistic from '@stylistic/eslint-plugin'
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
-
 export default defineConfig([
   globalIgnores(['dist', 'coverage']),
   {
@@ -53,7 +53,15 @@ export default defineConfig([
       reportUnusedDisableDirectives: 'error',
       reportUnusedInlineConfigs: 'error',
     },
+    plugins: {
+      '@stylistic': stylistic,
+    },
     rules: {
+      '@stylistic/jsx-quotes': ['error', 'prefer-double'],
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
+      '@stylistic/jsx-max-props-per-line': ['error', { maximum: 1 }],
+      '@stylistic/jsx-one-expression-per-line': ['error', { allow: 'none' }],
       '@typescript-eslint/consistent-type-exports': 'error',
       '@typescript-eslint/consistent-type-imports': [
         'error',
@@ -69,7 +77,6 @@ export default defineConfig([
       'no-eval': 'error',
       'no-implicit-coercion': 'error',
       'no-implied-eval': 'error',
-      'no-lonely-if': 'error',
       'no-new-func': 'error',
       'no-param-reassign': 'error',
       'no-script-url': 'error',
@@ -78,9 +85,7 @@ export default defineConfig([
       'no-var': 'error',
       'object-shorthand': ['error', 'always'],
       'prefer-arrow-callback': 'error',
-      'prefer-object-has-own': 'error',
       'prefer-template': 'error',
-      radix: 'error',
       yoda: 'error',
     },
   },

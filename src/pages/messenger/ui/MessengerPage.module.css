@@ -8,7 +8,7 @@
   margin: 0 auto;
 }
 
-.demoBanner {
+.statusBanner {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,13 +19,9 @@
   color: var(--color-text-muted);
 }
 
-.demoBanner strong {
-  color: var(--color-primary);
-  font-weight: 600;
-}
-
-.connectedBanner strong {
+.statusBanner strong {
   color: #238467;
+  font-weight: 600;
 }
 
 .syncError {
@@ -65,7 +61,7 @@
     padding: 0;
   }
 
-  .demoBanner {
+  .statusBanner {
     padding: 8px;
     font-size: 0.6rem;
     background: var(--color-primary-soft);

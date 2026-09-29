@@ -32,23 +32,6 @@
   color: white;
 }
 
-.search {
-  padding: 12px 20px 24px;
-}
-
-.search label {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  font-weight: 400;
-}
-
-.search input {
-  background: #f7f8fc;
-  border: 0;
-  font-size: 0.8rem;
-  min-height: 40px;
-}
-
 .sectionTitle {
   display: flex;
   justify-content: space-between;
@@ -93,7 +76,7 @@
   margin-top: 3px;
 }
 
-.demoAvatar {
+.footerAvatar {
   display: grid;
   place-items: center;
   width: 36px;

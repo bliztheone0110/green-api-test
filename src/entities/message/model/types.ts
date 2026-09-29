@@ -4,5 +4,5 @@ export interface Message {
   text: string
   timestamp: number
   direction: 'incoming' | 'outgoing'
-  status?: 'sending' | 'queued' | 'delivered' | 'read' | 'failed' | 'unknown' | 'demo'
+  status?: 'sending' | 'queued' | 'delivered' | 'read' | 'failed' | 'unknown'
 }

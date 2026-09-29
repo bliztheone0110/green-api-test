@@ -41,6 +41,14 @@ describe('GREEN-API client', () => {
     expect(result.instance).toEqual({ idInstance: '410000001', typeInstance: 'telegram' })
   })
 
+  it('does not require instance state notifications', async () => {
+    useValidConnectionHandlers({ stateWebhook: 'no' })
+
+    const result = await validateConnection(credentials)
+
+    expect(result.instance).toEqual({ idInstance: '410000001', typeInstance: 'telegram' })
+  })
+
   it('explains which notification settings must be changed', async () => {
     useValidConnectionHandlers({ webhookUrl: 'https://example.com/hook', incomingWebhook: 'no' })
 

@@ -9,7 +9,9 @@ export function AppProvider({ children }: PropsWithChildren) {
 
   return (
     <Provider store={store}>
-      <GreenApiProvider>{children}</GreenApiProvider>
+      <GreenApiProvider>
+        {children}
+      </GreenApiProvider>
     </Provider>
   )
 }

@@ -33,7 +33,6 @@ export async function validateConnection(
   if (settings.outgoingWebhook !== 'yes') settingsProblems.push('включите статусы исходящих сообщений')
   if (settings.outgoingMessageWebhook !== 'yes') settingsProblems.push('включите уведомления об исходящих сообщениях')
   if (settings.outgoingAPIMessageWebhook !== 'yes') settingsProblems.push('включите уведомления о сообщениях из API')
-  if (settings.stateWebhook !== 'yes') settingsProblems.push('включите уведомления о состоянии инстанса')
 
   if (settingsProblems.length > 0) {
     throw new GreenApiError(
