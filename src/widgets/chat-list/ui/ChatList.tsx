@@ -23,7 +23,7 @@ export function ChatList({ chats, activeId, footerDescription, footerTitle, onSe
         <span>
           <Icon name="chat" />
         </span>
-        Линия
+        Green-api telegram
       </div>
       <IconButton
         icon="plus"
