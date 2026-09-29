@@ -1,4 +1,38 @@
-.form { padding: 16px 28px 12px; background: white; border-top: 1px solid var(--color-border); }
-.inputRow { display: flex; gap: 12px; align-items: center; padding: 4px 10px 4px 4px; border: 1px solid var(--color-border); border-radius: 16px; background: #fcfcfe; }
-.hint { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font-size: 0.6rem; color: #8a8b9d; }
-@media (max-width: 760px) { .form { padding: 12px; } .hint > span:first-child { display: none; } .hint { justify-content: flex-end; } }
+.form {
+  padding: 16px 28px 12px;
+  background: white;
+  border-top: 1px solid var(--color-border);
+}
+
+.inputRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 4px 10px 4px 4px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: #fcfcfe;
+}
+
+.hint {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.6rem;
+  color: #8a8b9d;
+}
+
+@media (max-width: 760px) {
+  .form {
+    padding: 12px;
+  }
+
+  .hint > span:first-child {
+    display: none;
+  }
+
+  .hint {
+    justify-content: flex-end;
+  }
+}

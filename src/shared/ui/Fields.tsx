@@ -2,7 +2,7 @@ import { useId } from 'react'
 import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
 import styles from './ui.module.css'
 
-type FieldProps = { label: string; hint?: string; error?: string }
+interface FieldProps { label: string; hint?: string; error?: string }
 
 export function TextField({ label, hint, error, id, className = '', ...props }: InputHTMLAttributes<HTMLInputElement> & FieldProps) {
   const generatedId = useId()
@@ -10,7 +10,7 @@ export function TextField({ label, hint, error, id, className = '', ...props }: 
   const description = error ?? hint
   return <div className={styles.field}>
     <label htmlFor={fieldId}>{label}</label>
-    <input id={fieldId} className={`${styles.input} ${className}`} aria-invalid={!!error} aria-describedby={description ? `${fieldId}-hint` : undefined} {...props} />
+    <input id={fieldId} className={`${styles.input} ${className}`} aria-invalid={Boolean(error)} aria-describedby={description ? `${fieldId}-hint` : undefined} {...props} />
     {description && <span id={`${fieldId}-hint`} className={error ? styles.errorText : styles.hint}>{description}</span>}
   </div>
 }

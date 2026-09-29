@@ -7,7 +7,8 @@ export function Dialog({ title, children, onClose }: { title: string; children: 
   const ref = useRef<HTMLDialogElement>(null)
   const titleId = useId()
   useEffect(() => {
-    const dialog = ref.current!
+    const dialog = ref.current
+    if (!dialog) return
     const previousFocus = document.activeElement
     dialog.showModal()
     dialog.querySelector<HTMLElement>('input, textarea, select')?.focus()
@@ -16,7 +17,10 @@ export function Dialog({ title, children, onClose }: { title: string; children: 
       if (previousFocus instanceof HTMLElement) previousFocus.focus()
     }
   }, [])
-  return <dialog ref={ref} className={styles.dialog} aria-labelledby={titleId} onCancel={(event) => { event.preventDefault(); onClose() }}>
+  return <dialog ref={ref} className={styles.dialog} aria-labelledby={titleId} onCancel={(event) => {
+    event.preventDefault()
+    onClose()
+  }}>
     <header className={styles.dialogHeader}><h2 id={titleId}>{title}</h2><IconButton icon="close" label="Закрыть окно" onClick={onClose} /></header>
     {children}
   </dialog>

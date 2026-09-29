@@ -4,14 +4,14 @@ import { afterAll, afterEach, beforeAll } from 'vitest'
 import { server } from './server'
 
 // jsdom has no native modal implementation. Browser checks cover focus trapping/Escape.
-if (!HTMLDialogElement.prototype.showModal) {
+if (!Object.hasOwn(HTMLDialogElement.prototype, 'showModal')) {
   HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
   HTMLDialogElement.prototype.close = function () { this.removeAttribute('open') }
 }
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
+beforeAll(() => { server.listen({ onUnhandledRequest: 'error' }) })
 afterEach(() => {
   cleanup()
   server.resetHandlers()
 })
-afterAll(() => server.close())
+afterAll(() => { server.close() })
